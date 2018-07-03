@@ -1,11 +1,11 @@
 {
-  "name": "protractor-beautiful-reporter",
+  "name": "startos-protractor-reporter",
   "version": "1.2.2",
   "description": "An npm module and which generates your Protractor test reports in HTML (angular) with screenshots",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Evilweed/protractor-beautiful-reporter"
+    "url": "https://github.com/nwmac/protractor-beautiful-reporter"
   },
   "scripts": {
     "app:compile": "node --max_old_space_size=5760 ./node_modules/webpack/bin/webpack.js --config ./webpack.config.js"
@@ -30,9 +30,9 @@
   "author": "Marcin Cierpicki <zycienawalizkach@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Evilweed/protractor-beautiful-reporter/issues"
+    "url": "https://github.com/nwmac/protractor-beautiful-reporter/issues"
   },
-  "homepage": "https://github.com/Evilweed/protractor-beautiful-reporter",
+  "homepage": "https://github.com/nwmac/protractor-beautiful-reporter",
   "devDependencies": {
     "babel-core": "6.14.0",
     "babel-loader": "^6.1.0",
