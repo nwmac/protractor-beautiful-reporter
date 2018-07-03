@@ -4670,6 +4670,10 @@ function ScreenshotReporter(options) {
     if (!this.preserveDirectory) {
         util.removeDirectory(this.finalOptions.baseDirectory);
     }
+
+    // Array of regex for lines to ignore from the log
+    this.logIgnore = options.logIgnore || [];
+
 }
 
 var Jasmine2Reporter = function () {
@@ -4869,7 +4873,9 @@ var Jasmine2Reporter = function () {
         key: '_gatherBrowserLogs',
         value: function () {
             var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(result) {
-                var capabilities, browserName;
+                var _this6 = this;
+
+                var capabilities, browserName, filteredLogs;
                 return regeneratorRuntime.wrap(function _callee7$(_context7) {
                     while (1) {
                         switch (_context7.prev = _context7.next) {
@@ -4905,7 +4911,25 @@ var Jasmine2Reporter = function () {
                             case 10:
                                 result.browserLogs = _context7.sent;
 
-                            case 11:
+
+                                // Remove any lines from the browser log that match the ignore regex
+                                filteredLogs = [];
+
+                                result.browserLogs.forEach(function (logEntry) {
+                                    var ignore = false;
+                                    _this6._screenshotReporter.logIgnore.forEach(function (regex) {
+                                        if (logEntry.message.match(regex) !== null) {
+                                            ignore = true;
+                                        }
+                                    });
+                                    if (!ignore) {
+                                        filteredLogs.push(logEntry);
+                                    }
+                                });
+
+                                result.browserLogs = filteredLogs;
+
+                            case 14:
                             case 'end':
                                 return _context7.stop();
                         }

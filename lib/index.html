@@ -2,7 +2,7 @@
 <html lang="en" ng-app="reportingApp" ng-csp>
 <head>
     <meta charset="UTF-8">
-    <title>Protractor Screenshot Report</title>
+    <title>Protractor Report</title>
 
     <link rel="stylesheet" href="assets/main.css">
     <!-- Here will be CSS placed -->
@@ -12,7 +12,7 @@
     <script src="assets/bootstrap.min.js"></script>
 
 </head>
-<body ng-controller="ScreenshotReportController as ctrl" class="ng-cloak">
+<body ng-controller="ScreenshotReportController as ctrl" class="ng-cloak test-report">
 
 <!-- Header -->
 <h2>
@@ -107,7 +107,7 @@
             <span class="label label-warning"><span class="glyphicon glyphicon-option-horizontal"></span></span>
         </td>
         <td class="smallColumn" ng-if="!ctrl.displayTime" ng-show="ctrl.displayTime">
-            <span class="label label-default" ng-class="{'label-warning': result.duration > 14, 'label-danger': result.duration > 19}">{{ctrl.round(result.duration, 1)}} s</span>
+            <span class="label label-default" ng-class="{'label-warning': result.duration > 10000, 'label-danger': result.duration > 20000}">{{ctrl.round(result.duration, 1)}} s</span>
         </td>
         <td class="mediumColumn">{{ctrl.getShortDescription(result.description)}}</td>
         <td ng-if="!ctrl.displayBrowser" ng-show="ctrl.displayBrowser">{{result.browser.name}} {{result.browser.version}}</td>
@@ -117,13 +117,13 @@
         <td class="logColumn">
             <!--<button class="btn btn-warning pull-right" data-toggle="modal" data-target="#modal{{$index}}" ng-if="result.logWarnings > 0">{{result.logWarnings}}</button>-->
             <!--<button class="btn btn-danger pull-right" data-toggle="modal" data-target="#modal{{$index}}" ng-if="result.logErrors > 0">{{result.logErrors}}</button>-->
-            <span class="label label-default ng-binding label-warning pull-right consoleLogLabel" ng-if="result.logWarnings > 0" data-toggle="modal" data-target="#modal{{$index}}">{{result.logWarnings}}</span>
-            <span class="label label-default ng-binding label-danger pull-right consoleLogLabel" ng-if="result.logErrors > 0" data-toggle="modal" data-target="#modal{{$index}}">{{result.logErrors}}</span>
+            <span class="label label-default ng-binding label-warning consoleLogLabel" ng-if="result.logWarnings > 0" data-toggle="modal" data-target="#modal{{$index}}">{{result.logWarnings}}</span>
+            <span class="label label-default ng-binding label-danger  consoleLogLabel" ng-if="result.logErrors > 0" data-toggle="modal" data-target="#modal{{$index}}">{{result.logErrors}}</span>
         </td>
         <td class="smallColumn">
             <!-- Show stacktrace if failure -->
             <div ng-if="(!result.passed && !result.pending) || result.browserLogs.length > 0">
-                <span class="label label-white ng-binding pull-right" data-toggle="modal" data-target="#modal{{$index}}" ng-if="result.trace.length > 0">
+                <span class="label label-white ng-binding" data-toggle="modal" data-target="#modal{{$index}}" ng-if="result.trace.length > 0">
                     <span class="glyphicon glyphicon-warning-sign red"></span>
                 </span>
                 <!-- Stacktrace Modal -->
@@ -216,9 +216,6 @@
     </tr>
     </tbody>
 </table>
-<div class="center">
-    <a class="github-button" href="https://github.com/Evilweed/protractor-beautiful-reporter" data-size="large" data-show-count="true" aria-label="Star Evilweed/protractor-beautiful-reporter on GitHub">Star</a>
-</div>
 {{ctrl.currentParent = "";""}}
 <script src="assets/main.js"></script>
 <script async defer src="assets/buttons.js"></script>

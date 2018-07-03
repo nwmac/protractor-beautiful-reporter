@@ -192,6 +192,9 @@ function ScreenshotReporter(options) {
     if(!this.preserveDirectory){
         util.removeDirectory(this.finalOptions.baseDirectory);
     }
+
+    // Array of regex for lines to ignore from the log
+    this.logIgnore = options.logIgnore || [];
 }
 
 class Jasmine2Reporter {
@@ -281,6 +284,21 @@ class Jasmine2Reporter {
 
         result.browserLogs = await browser.manage().logs().get('browser');
 
+        // Remove any lines from the browser log that match the ignore regex
+        const filteredLogs = [];
+        result.browserLogs.forEach(logEntry => {
+            var ignore = false;
+            this._screenshotReporter.logIgnore.forEach((regex) => {
+                if (logEntry.message.match(regex) !== null) {
+                    ignore = true;
+                }
+            });
+            if (!ignore) {
+                filteredLogs.push(logEntry);
+            }
+        });
+
+        result.browserLogs = filteredLogs;
     }
 
     async _takeScreenShotAndAddMetaData(result) {
